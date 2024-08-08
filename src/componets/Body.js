@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withOpenRestaurant } from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -8,6 +8,8 @@ const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   const [filteredResList, setfilteredResList] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const RestaurantCardWithOpen = withOpenRestaurant(RestaurantCard)
 
   useEffect(() => {
     fetchData();
@@ -27,7 +29,6 @@ const Body = () => {
   };
 
   const checkOnline = useOnlineStatus();
-  console.log(checkOnline);
   if (checkOnline === false) {
     return (
       <div>
@@ -42,14 +43,17 @@ const Body = () => {
 
   return (
     <div className="body">
-      <div className="search-filter-container">
+      <div className="flex m-4">
         <div className="search-container">
           <input
+            className="border border-gray-300 rounded-md p-2"
+            placeholder="search"
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
           <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
             onClick={() => {
               const filteredList = restaurantList.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -62,22 +66,26 @@ const Body = () => {
         </div>
         <div className="filter-btn-container">
           <button
+            className="bg-gray-400 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2"
             onClick={() => {
-              console.log(restaurantList);
+              // console.log(restaurantList);
               const filteredList = restaurantList.filter(
                 (res) => res.info.avgRating > 4.4
               );
-              setRestaurantList(filteredList);
+              setfilteredResList(filteredList);
             }}
           >
             Top Rated Restaurant
           </button>
         </div>
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {filteredResList.map((resData) => (
           <Link to={"/restaurants/" + resData.info.id} key={resData.info.id}>
-            <RestaurantCard resData={resData} />
+            {
+              resData.info.isOpen ? <RestaurantCardWithOpen resData={resData}/>:
+              <RestaurantCard resData={resData} />
+            }
           </Link>
         ))}
       </div>

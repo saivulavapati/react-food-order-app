@@ -10,12 +10,9 @@ const useRestaurantMenu = (resId) => {
     },[])
 
     const fetchData = async () => {
-        console.log(MENU_URL+resId)
         const data = await fetch(MENU_URL+resId)
         const json = await data.json();
-        console.log(json)
-        setResMenuData(json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards)
-        console.log(json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards)
+        setResMenuData(json?.data)
     }
 
     return resMenuData;
