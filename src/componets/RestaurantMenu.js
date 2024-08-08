@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
-import RestaurantItem from "./RestaurantItem";
+import RestaurantMenuItem from "./RestaurantMenuItem";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
@@ -13,7 +13,7 @@ const RestaurantMenu = () => {
 
   return (
     <div>
-      {categories.map((menuItem) => <RestaurantItem/>)}
+      {categories.map((menuItem) => <RestaurantMenuItem menuData={menuItem}/>)}
     </div>
   );
 };
