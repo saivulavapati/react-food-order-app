@@ -1,9 +1,11 @@
 import { useState } from "react";
 import MenuItem from "./MenuItem";
 
-const RestaurantMenuItem = ({ menuData }) => {
-  const [showItems,setShowItems] = useState(false)
+const RestaurantMenuCategory = ({ menuData,showItems,setExpandIndex }) => {
   const {itemCards}= menuData?.card?.card
+  const handleClick = () => {
+    setExpandIndex();
+  }
   return (
     <div>
       <div className="w-6/12  border-black-200 border-2 mb-2 mx-auto shadow-lg">
@@ -12,9 +14,7 @@ const RestaurantMenuItem = ({ menuData }) => {
             {menuData?.card?.card?.title}(
             {menuData?.card?.card?.itemCards.length})
           </h1>
-          <button className="bg-blue-300 p-1 rounded-md text-white" onClick={()=>{
-            setShowItems(!showItems)
-          }}>{!showItems ? "Show":"Hide"}</button>
+          <button className="bg-blue-300 p-1 rounded-md text-white" onClick={handleClick}>{!showItems ? "Show":"Hide"}</button>
         </div>
         {showItems ? <div>
             {itemCards.map((itemData)=> <MenuItem itemData={itemData}/>)}
@@ -24,4 +24,4 @@ const RestaurantMenuItem = ({ menuData }) => {
   );
 };
 
-export default RestaurantMenuItem;
+export default RestaurantMenuCategory;

@@ -1,8 +1,9 @@
 import RestaurantCard, { withOpenRestaurant } from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
@@ -10,6 +11,8 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
 
   const RestaurantCardWithOpen = withOpenRestaurant(RestaurantCard)
+
+  const {loggedUser,setAuthenticatedUser} = useContext(UserContext);
 
   useEffect(() => {
     fetchData();
@@ -44,7 +47,7 @@ const Body = () => {
   return (
     <div className="body">
       <div className="flex m-4">
-        <div className="search-container">
+        <div>
           <input
             className="border border-gray-300 rounded-md p-2"
             placeholder="search"
@@ -64,7 +67,7 @@ const Body = () => {
             search
           </button>
         </div>
-        <div className="filter-btn-container">
+        <div>
           <button
             className="bg-gray-400 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2"
             onClick={() => {
@@ -77,6 +80,17 @@ const Body = () => {
           >
             Top Rated Restaurant
           </button>
+        </div>
+        <div className="ml-2">
+        <span>UserName:</span>
+        <input
+            className="border border-gray-300 rounded-md p-2 ml-2"
+            placeholder="Enter Username"
+            type="text"
+            value={loggedUser}
+            onChange={(e)=>setAuthenticatedUser(e.target.value)}
+            
+          />
         </div>
       </div>
       <div className="flex flex-wrap">
