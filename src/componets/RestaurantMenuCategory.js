@@ -17,7 +17,7 @@ const RestaurantMenuCategory = ({ menuData,showItems,setExpandIndex }) => {
           <button className="bg-blue-300 p-1 rounded-md text-white" onClick={handleClick}>{!showItems ? "Show":"Hide"}</button>
         </div>
         {showItems ? <div>
-            {itemCards.map((itemData)=> <MenuItem itemData={itemData}/>)}
+            {itemCards.map((itemData)=> <MenuItem key={itemData?.card?.info?.id} itemData={itemData}/>)}
         </div>:""}
       </div>
     </div>
