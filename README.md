@@ -2,4 +2,4 @@
 
 #parcel is used
 
-#a react application built like swiggy
+#a react application built like swiggy.
